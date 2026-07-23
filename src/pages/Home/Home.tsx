@@ -11,6 +11,8 @@ import NavigationRails from "../../components/NavigationRails/NavigationRails";
 
 import Card from "../../components/Card/Card";
 
+import { useCars, orderbyOptions, pageSizeOptions } from "../../model/cars";
+
 const options = [
   { value: "dog", label: "Dog" },
   { value: "cat", label: "Cat" },
@@ -20,16 +22,17 @@ const options = [
   { value: "goldfish", label: "Goldfish" },
 ];
 
-const pageSizeOptions = [
-  { value: "6", label: "6 vehicles" },
-  { value: "12", label: "12 vehicles" },
-  { value: "24", label: "24 vehicles" },
-];
+function Home() {
+  const { cars, makes, filters } = useCars();
 
-function FilterFields() {
-  return (
+  const makeOptions = makes.map((make) => ({
+    value: make,
+    label: make,
+  }));
+
+  const FilterFields = (
     <>
-      <Select options={options} placeholder="Make" />
+      <Select options={makeOptions} placeholder="Make" onChange={filters.filterByMake} />
 
       <InputText placeholder="Model" />
 
@@ -42,20 +45,29 @@ function FilterFields() {
       <Checkbox label="Only favorite" />
     </>
   );
-}
 
-function Home() {
+  const carsList = cars.map((car) => (
+    <Card
+      key={`${car.make}-${car.model}-${car.year}`}
+      year={car.year}
+      model={car.model}
+      favorite={car.favorite}
+      engineSize={car.engineSize}
+      fuelType={car.fuelType}
+      startingBid={car.startingBid}
+      mileage={car.mileage}
+      make={car.make}
+      auctionStartsAt={car.auctionDateTime}
+    />
+  ));
+
   return (
     <Container>
-      <FiltersContainer>
-        <FilterFields />
-      </FiltersContainer>
+      <FiltersContainer>{FilterFields}</FiltersContainer>
 
       <ContentContainer>
         <Header>
-          <NavigationRails>
-            <FilterFields />
-          </NavigationRails>
+          <NavigationRails>{FilterFields}</NavigationRails>
 
           <Pill>ASDFGH</Pill>
 
@@ -64,83 +76,11 @@ function Home() {
           <Button>Clear filters</Button>
 
           <OrderByContainer>
-            <Select options={options} placeholder="Order by" />
+            <Select options={orderbyOptions} placeholder="Order by" />
           </OrderByContainer>
         </Header>
 
-        <CardContainer>
-          <Card
-            year="2024"
-            model="C 300"
-            favorite={false}
-            engineSize="1.6L"
-            fuelType="Diesel"
-            startingBid={52900}
-            mileage="11 000 mi"
-            make="Mercedes-Benz"
-            auctionStartsAt="2026-08-20T12:00:00+01:00"
-          />
-
-          <Card
-            year="2024"
-            model="C 300"
-            favorite={false}
-            engineSize="1.6L"
-            fuelType="Diesel"
-            startingBid={52900}
-            mileage="11 000 mi"
-            make="Mercedes-Benz"
-            auctionStartsAt="2026-08-20T12:00:00+01:00"
-          />
-
-          <Card
-            year="2024"
-            model="C 300"
-            favorite={false}
-            engineSize="1.6L"
-            fuelType="Diesel"
-            startingBid={52900}
-            mileage="11 000 mi"
-            make="Mercedes-Benz"
-            auctionStartsAt="2026-08-20T12:00:00+01:00"
-          />
-
-          <Card
-            year="2024"
-            model="C 300"
-            favorite={false}
-            engineSize="1.6L"
-            fuelType="Diesel"
-            startingBid={52900}
-            mileage="11 000 mi"
-            make="Mercedes-Benz"
-            auctionStartsAt="2026-08-20T12:00:00+01:00"
-          />
-
-          <Card
-            year="2024"
-            model="C 300"
-            favorite={false}
-            engineSize="1.6L"
-            fuelType="Diesel"
-            startingBid={52900}
-            mileage="11 000 mi"
-            make="Mercedes-Benz"
-            auctionStartsAt="2026-08-20T12:00:00+01:00"
-          />
-
-          <Card
-            year="2024"
-            model="C 300"
-            favorite={false}
-            engineSize="1.6L"
-            fuelType="Diesel"
-            startingBid={52900}
-            mileage="11 000 mi"
-            make="Mercedes-Benz"
-            auctionStartsAt="2026-08-20T12:00:00+01:00"
-          />
-        </CardContainer>
+        <CardContainer>{carsList}</CardContainer>
 
         <Footer>
           <Pagination totalPages={5} />

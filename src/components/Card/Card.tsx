@@ -10,8 +10,8 @@ interface CardProps {
   model: string;
   engineSize: string;
   fuelType: string;
-  year: string;
-  mileage: string;
+  year: number;
+  mileage: number;
   favorite: boolean;
 }
 

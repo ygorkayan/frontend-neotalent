@@ -12,7 +12,7 @@ function Select(props: Readonly<SelectProps>) {
 
   return (
     <Container>
-      <SelectComponent id={id} defaultValue="">
+      <SelectComponent id={id} defaultValue="" onChange={(e) => props?.onChange?.(e.target.value)}>
         <option value="" disabled>
           {props.placeholder}
         </option>
@@ -31,6 +31,7 @@ export type SelectOption = {
 interface SelectProps {
   options?: SelectOption[];
   placeholder?: string;
+  onChange?: (value: string) => void;
 }
 
 const Container = styled.div`
