@@ -1,20 +1,18 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 interface PaginationProps {
   totalPages: number;
-  initialPage?: number;
+  currentPage: number;
   onPageChange?: (page: number) => void;
 }
 
-function Pagination({ totalPages, initialPage = 1, onPageChange }: Readonly<PaginationProps>) {
+function Pagination({ totalPages, currentPage, onPageChange }: Readonly<PaginationProps>) {
   const safeTotalPages = Math.max(1, totalPages);
-  const [currentPage, setCurrentPage] = useState(Math.min(Math.max(initialPage, 1), safeTotalPages));
+  const safeCurrentPage = Math.min(Math.max(currentPage, 1), safeTotalPages);
 
   function changePage(page: number) {
     const nextPage = Math.min(Math.max(page, 1), safeTotalPages);
 
-    setCurrentPage(nextPage);
     onPageChange?.(nextPage);
   }
 
@@ -24,9 +22,9 @@ function Pagination({ totalPages, initialPage = 1, onPageChange }: Readonly<Pagi
     return (
       <PageButton
         key={page}
-        $active={page === currentPage}
+        $active={page === safeCurrentPage}
         onClick={() => changePage(page)}
-        aria-current={page === currentPage ? "page" : undefined}
+        aria-current={page === safeCurrentPage ? "page" : undefined}
       >
         {page}
       </PageButton>
@@ -35,13 +33,16 @@ function Pagination({ totalPages, initialPage = 1, onPageChange }: Readonly<Pagi
 
   return (
     <PaginationContainer aria-label="Pagination">
-      <PageButton disabled={currentPage === 1} onClick={() => changePage(currentPage - 1)}>
+      <PageButton disabled={safeCurrentPage === 1} onClick={() => changePage(safeCurrentPage - 1)}>
         <Chevron>‹</Chevron>
       </PageButton>
 
       {pages}
 
-      <PageButton disabled={currentPage === safeTotalPages} onClick={() => changePage(currentPage + 1)}>
+      <PageButton
+        disabled={safeCurrentPage === safeTotalPages}
+        onClick={() => changePage(safeCurrentPage + 1)}
+      >
         <Chevron>›</Chevron>
       </PageButton>
     </PaginationContainer>

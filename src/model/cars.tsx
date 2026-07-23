@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { type Car, getCars } from "../services/getCars";
 
 import {
@@ -40,33 +40,87 @@ export type Filter = {
 };
 
 export const useCars = () => {
-  const [cars, setCars] = useState<Car[]>([]);
+  const [cars, setCars] = useState<Car[]>(getCars);
   const [order, setOrder] = useState<string>();
   const [filters, setFilters] = useState<Filter[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(6);
 
   const makes = Array.from(new Set(cars.map((car) => car.make)));
+  const filteredCars = cars.filter((car) => filters.every((filter) => filter.filter(car)));
+  const totalPages = Math.ceil(filteredCars.length / pageSize);
+  const safeCurrentPage = Math.min(currentPage, Math.max(1, totalPages));
+  const firstCarIndex = (safeCurrentPage - 1) * pageSize;
+  const paginatedCars = filteredCars.slice(firstCarIndex, firstCarIndex + pageSize);
 
-  useEffect(() => {
-    const fetchedCars = getCars();
-    setCars(fetchedCars);
-  }, []);
+  const resetPage = () => setCurrentPage(1);
+
+  const changePage = (page: number) => {
+    setCurrentPage(Math.min(Math.max(page, 1), Math.max(1, totalPages)));
+  };
+
+  const changePageSize = (value: string) => {
+    const nextPageSize = Number(value);
+
+    if (!pageSizeOptions.some((option) => Number(option.value) === nextPageSize)) return;
+
+    setPageSize(nextPageSize);
+    resetPage();
+  };
+
+  const applyMakeFilter = (make: string) => {
+    filterByMake(setFilters)(make);
+    resetPage();
+  };
+
+  const applyModelFilter = (model: string) => {
+    filterByModel(setFilters)(model);
+    resetPage();
+  };
+
+  const applyMinBidFilter = (minBid: number | null) => {
+    filterByMinBid(setFilters)(minBid);
+    resetPage();
+  };
+
+  const applyMaxBidFilter = (maxBid: number | null) => {
+    filterByMaxBid(setFilters)(maxBid);
+    resetPage();
+  };
+
+  const applyFavoriteFilter = (favorite: boolean) => {
+    filterByFavorite(setFilters)(favorite);
+    resetPage();
+  };
+
+  const removeFilters = () => {
+    clearFilters(setFilters)();
+    resetPage();
+  };
 
   return {
-    cars: cars.filter((car) => filters.every((filter) => filter.filter(car))),
+    cars: paginatedCars,
     makes,
     filters: {
-      filterByMake: filterByMake(setFilters),
-      filterByModel: filterByModel(setFilters),
-      filterByMinBid: filterByMinBid(setFilters),
-      filterByMaxBid: filterByMaxBid(setFilters),
-      filterByFavorite: filterByFavorite(setFilters),
-      clearFilters: clearFilters(setFilters),
+      filterByMake: applyMakeFilter,
+      filterByModel: applyModelFilter,
+      filterByMinBid: applyMinBidFilter,
+      filterByMaxBid: applyMaxBidFilter,
+      filterByFavorite: applyFavoriteFilter,
+      clearFilters: removeFilters,
       filtersApplied: formatFilters(filters),
     },
     favoriteCar: favoriteCar(setCars),
     orderBy: {
       currentOrder: order,
       setOrder: orderCars(cars, setOrder, setCars),
+    },
+    pagination: {
+      currentPage: safeCurrentPage,
+      totalPages,
+      pageSize: pageSize.toString(),
+      setPage: changePage,
+      setPageSize: changePageSize,
     },
   };
 };

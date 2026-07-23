@@ -14,7 +14,7 @@ import Card from "../../components/Card/Card";
 import { useCars, orderbyOptions, pageSizeOptions } from "../../model/cars";
 
 function Home() {
-  const { cars, makes, filters, favoriteCar, orderBy } = useCars();
+  const { cars, makes, filters, favoriteCar, orderBy, pagination } = useCars();
 
   const makeOptions = makes.map((make) => ({
     value: make,
@@ -29,17 +29,38 @@ function Home() {
 
   const FilterFields = (
     <>
-      <Select options={makeOptions} value={makeSelectedValue} placeholder="Make" onChange={filters.filterByMake} />
+      <Select
+        options={makeOptions}
+        value={makeSelectedValue}
+        placeholder="Make"
+        onChange={filters.filterByMake}
+      />
 
-      <InputText placeholder="Model" value={modelSelectedValue} onChange={filters.filterByModel} />
+      <InputText
+        placeholder="Model"
+        value={modelSelectedValue}
+        onChange={filters.filterByModel}
+      />
 
       <BidContainer>
-        <InputNumber placeholder="Min bid" value={minBidSelectedValue} onChange={filters.filterByMinBid} />
+        <InputNumber
+          placeholder="Min bid"
+          value={minBidSelectedValue}
+          onChange={filters.filterByMinBid}
+        />
 
-        <InputNumber placeholder="Max bid" value={maxBidSelectedValue} onChange={filters.filterByMaxBid} />
+        <InputNumber
+          placeholder="Max bid"
+          value={maxBidSelectedValue}
+          onChange={filters.filterByMaxBid}
+        />
       </BidContainer>
 
-      <Checkbox label="Favorites only" value={favoriteSelectedValue} onChange={filters.filterByFavorite} />
+      <Checkbox
+        label="Favorites only"
+        value={favoriteSelectedValue}
+        onChange={filters.filterByFavorite}
+      />
     </>
   );
 
@@ -86,7 +107,9 @@ function Home() {
 
           {pillsList}
 
-          {filters.filtersApplied.length > 0 && <Button onClick={filters.clearFilters}>Clear filters</Button>}
+          {filters.filtersApplied.length > 0 && (
+            <Button onClick={filters.clearFilters}>Clear filters</Button>
+          )}
 
           <OrderByContainer>
             <Select
@@ -101,10 +124,21 @@ function Home() {
         <CardContainer>{carsList}</CardContainer>
 
         <Footer>
-          <Pagination totalPages={5} />
+          {pagination.totalPages > 0 && (
+            <Pagination
+              totalPages={pagination.totalPages}
+              currentPage={pagination.currentPage}
+              onPageChange={pagination.setPage}
+            />
+          )}
 
           <PageSizeContainer>
-            <Select options={pageSizeOptions} placeholder="Vehicles per page" />
+            <Select
+              options={pageSizeOptions}
+              value={pagination.pageSize}
+              placeholder="Vehicles per page"
+              onChange={pagination.setPageSize}
+            />
           </PageSizeContainer>
         </Footer>
       </ContentContainer>
