@@ -1,6 +1,15 @@
 // it's just a mock data for now, in a real app this would be fetched from an API
 export function getCars() {
+  const carsLocal = localStorage.getItem("cars");
+
+  // it is a kind of cache to avoid go to the server if there are the data
+  if (carsLocal) {
+    console.log("Fetching cars from localStorage...");
+    return JSON.parse(carsLocal);
+  }
+
   console.log("Fetching cars...");
+  localStorage.setItem("cars", JSON.stringify(cars));
   return cars;
 }
 

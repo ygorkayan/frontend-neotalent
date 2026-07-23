@@ -121,7 +121,14 @@ export const formatFilters = (filters: Filter[]): FilterWhiteoutFn[] => {
 };
 
 export const favoriteCar = (setCars: React.Dispatch<React.SetStateAction<Car[]>>) => (id: number) => {
-  setCars((prevCars) => prevCars.map((car) => (car.id === id ? { ...car, favorite: !car.favorite } : car)));
+  // it is to simulate a request to the server, favorite the car there and then request it and set a new state with the updated data.
+  const cars = localStorage.getItem("cars");
+  const carsArray: Car[] = cars ? JSON.parse(cars) : [];
+
+  const newCarsArray = carsArray.map((car) => (car.id === id ? { ...car, favorite: !car.favorite } : car));
+  localStorage.setItem("cars", JSON.stringify(newCarsArray));
+
+  setCars(newCarsArray);
 };
 
 export const orderCars =
@@ -163,5 +170,6 @@ export const orderCars =
     }
 
     setOrder(order);
+    // it sorting in place, TODO: create another approach to avoid mutating the state directly
     setCars(sortedCars);
   };

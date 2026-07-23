@@ -29,56 +29,30 @@ function Home() {
 
   const FilterFields = (
     <>
-      <Select
-        options={makeOptions}
-        value={makeSelectedValue}
-        placeholder="Make"
-        onChange={filters.filterByMake}
-      />
+      <Select options={makeOptions} value={makeSelectedValue} placeholder="Make" onChange={filters.filterByMake} />
 
-      <InputText
-        placeholder="Model"
-        value={modelSelectedValue}
-        onChange={filters.filterByModel}
-      />
+      <InputText placeholder="Model" value={modelSelectedValue} onChange={filters.filterByModel} />
 
       <BidContainer>
-        <InputNumber
-          placeholder="Min bid"
-          value={minBidSelectedValue}
-          onChange={filters.filterByMinBid}
-        />
+        <InputNumber placeholder="Min bid" value={minBidSelectedValue} onChange={filters.filterByMinBid} />
 
-        <InputNumber
-          placeholder="Max bid"
-          value={maxBidSelectedValue}
-          onChange={filters.filterByMaxBid}
-        />
+        <InputNumber placeholder="Max bid" value={maxBidSelectedValue} onChange={filters.filterByMaxBid} />
       </BidContainer>
 
-      <Checkbox
-        label="Favorites only"
-        value={favoriteSelectedValue}
-        onChange={filters.filterByFavorite}
-      />
+      <Checkbox label="Favorites only" value={favoriteSelectedValue} onChange={filters.filterByFavorite} />
     </>
   );
 
   const pillsList = filters.filtersApplied.map((filter) => {
-
-    if(filter.name === "Favorite") {
-      return (
-        <Pill key={filter.name}>
-          {filter.name}s only
-        </Pill>
-      )
+    if (filter.name === "Favorite") {
+      return <Pill key={filter.name}>{filter.name}s only</Pill>;
     }
 
     return (
-    <Pill key={filter.name}>
-      {filter.name}: {filter.value}
-    </Pill>
-  )
+      <Pill key={filter.name}>
+        {filter.name}: {filter.value}
+      </Pill>
+    );
   });
 
   const carsList = cars.map((car) => (
@@ -107,9 +81,7 @@ function Home() {
 
           {pillsList}
 
-          {filters.filtersApplied.length > 0 && (
-            <Button onClick={filters.clearFilters}>Clear filters</Button>
-          )}
+          {filters.filtersApplied.length > 0 && <Button onClick={filters.clearFilters}>Clear filters</Button>}
 
           <OrderByContainer>
             <Select
@@ -121,7 +93,8 @@ function Home() {
           </OrderByContainer>
         </Header>
 
-        <CardContainer>{carsList}</CardContainer>
+        {carsList.length > 1 && <CardContainer>{carsList}</CardContainer>}
+        {carsList.length < 1 && "msg bonita"}
 
         <Footer>
           {pagination.totalPages > 0 && (
