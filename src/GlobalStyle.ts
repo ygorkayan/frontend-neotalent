@@ -24,8 +24,19 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    min-width: 320px;
     font-family: var(--font-family);
     background-color: var(--color-white);
+  }
+
+  #root {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  img,
+  svg {
+    max-width: 100%;
   }
 
 `;

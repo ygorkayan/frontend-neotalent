@@ -91,11 +91,12 @@ function Card({
 }
 
 const CardContainer = styled.div`
-  width: 380px;
+  width: 100%;
+  min-width: 0;
   cursor: pointer;
   box-shadow: var(--box-shadow);
   background: var(--color-white);
-  padding: var(--default-padding);
+  padding: clamp(14px, 2vw, var(--default-padding));
   border-radius: var(--border-radius);
   border: 1px solid var(--border-color);
 `;
@@ -116,11 +117,11 @@ const CarImage = styled.img`
 `;
 
 const FavoriteButton = styled.button`
-  top: 14px;
+  top: clamp(8px, 2vw, 14px);
   border: 0;
-  right: 14px;
-  width: 52px;
-  height: 52px;
+  right: clamp(8px, 2vw, 14px);
+  width: clamp(42px, 5vw, 52px);
+  height: clamp(42px, 5vw, 52px);
   display: grid;
   cursor: pointer;
   color: #0875c9;
@@ -144,27 +145,27 @@ const FavoriteButton = styled.button`
 `;
 
 const Content = styled.div`
-  padding-top: 30px;
+  padding-top: clamp(20px, 3vw, 30px);
 `;
 
 const Price = styled.p`
   color: #090a0d;
-  font-size: 34px;
+  font-size: clamp(28px, 3vw, 34px);
   font-weight: 700;
   line-height: 1.1;
 `;
 
 const Currency = styled.span`
-  font-size: 32px;
+  font-size: clamp(25px, 2.8vw, 32px);
   font-weight: 400;
 `;
 
 const Name = styled.span`
   display: block;
-  margin-top: 30px;
+  margin-top: clamp(20px, 3vw, 30px);
   overflow: hidden;
   color: #090a0d;
-  font-size: 26px;
+  font-size: clamp(21px, 2.5vw, 26px);
   font-weight: 600;
   line-height: 1.15;
   white-space: nowrap;
@@ -180,12 +181,12 @@ const Subtitle = styled.p`
 
 const DetailsList = styled.div`
   display: grid;
-  gap: 17px 28px;
-  margin-top: 30px;
+  gap: 17px clamp(14px, 2vw, 28px);
+  margin-top: clamp(22px, 3vw, 30px);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  @media (max-width: 390px) {
-    grid-template-columns: 1fr;
+  > :last-child {
+    grid-column: 1 / -1;
   }
 `;
 
@@ -193,18 +194,22 @@ const Detail = styled.div`
   gap: 10px;
   min-width: 0;
   display: flex;
-  font-size: 20px;
+  font-size: clamp(16px, 2vw, 20px);
   color: #111216;
   align-items: center;
-  white-space: nowrap;
+
+  span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
 `;
 
 const AuctionCountdown = styled.div`
   gap: 13px;
   display: flex;
-  margin-top: 28px;
+  margin-top: clamp(22px, 3vw, 28px);
   color: #0875c9;
-  padding-top: 22px;
+  padding-top: clamp(18px, 2.5vw, 22px);
   align-items: center;
   border-top: 1px solid var(--border-color);
 
@@ -216,6 +221,7 @@ const AuctionCountdown = styled.div`
 
 const AuctionTime = styled.div`
   gap: 2px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
 `;
@@ -228,11 +234,11 @@ const AuctionLabel = styled.span`
 
 const TimeValues = styled.span`
   color: #111216;
-  font-size: 18px;
+  font-size: clamp(16px, 2vw, 18px);
 
   strong {
     color: #0875c9;
-    font-size: 22px;
+    font-size: clamp(19px, 2.2vw, 22px);
   }
 `;
 

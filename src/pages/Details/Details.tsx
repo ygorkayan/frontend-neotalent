@@ -10,10 +10,11 @@ function Details() {
 
 const Container = styled.div`
   display: flex;
+  padding: 16px;
+  min-height: 100dvh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 `;
 
 export default Details;

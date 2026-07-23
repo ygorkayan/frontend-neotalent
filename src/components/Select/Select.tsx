@@ -12,8 +12,8 @@ function Select(props: Readonly<SelectProps>) {
 
   return (
     <Container>
-      <SelectComponent id={id}>
-        <option disabled selected>
+      <SelectComponent id={id} defaultValue="">
+        <option value="" disabled>
           {props.placeholder}
         </option>
 
@@ -34,11 +34,15 @@ interface SelectProps {
 }
 
 const Container = styled.div`
+  width: 100%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
 `;
 
 const SelectComponent = styled.select`
+  width: 100%;
+  min-width: 0;
   font-size: 16px;
   cursor: pointer;
   padding: var(--small-padding);

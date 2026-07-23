@@ -16,11 +16,15 @@ interface InputTextProps {
 }
 
 const Container = styled.div`
+  width: 100%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
 `;
 
 const InputTextComponent = styled.input`
+  width: 100%;
+  min-width: 0;
   font-size: 16px;
   cursor: pointer;
   padding: var(--small-padding);

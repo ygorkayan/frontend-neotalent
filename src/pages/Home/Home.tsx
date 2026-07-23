@@ -7,19 +7,38 @@ import Checkbox from "../../components/Checkbox/Checkbox";
 import Button from "../../components/Button/Button";
 import Pill from "../../components/Pill/Pill";
 import Pagination from "../../components/Pagination/Pagination";
+import NavigationRails from "../../components/NavigationRails/NavigationRails";
 
 import Card from "../../components/Card/Card";
 
-function Home() {
-  const options = [
-    { value: "dog", label: "Dog" },
-    { value: "cat", label: "Cat" },
-    { value: "hamster", label: "Hamster" },
-    { value: "parrot", label: "Parrot" },
-    { value: "spider", label: "Spider" },
-    { value: "goldfish", label: "Goldfish" },
-  ];
+const options = [
+  { value: "dog", label: "Dog" },
+  { value: "cat", label: "Cat" },
+  { value: "hamster", label: "Hamster" },
+  { value: "parrot", label: "Parrot" },
+  { value: "spider", label: "Spider" },
+  { value: "goldfish", label: "Goldfish" },
+];
 
+function FilterFields() {
+  return (
+    <>
+      <Select options={options} placeholder="Make" />
+
+      <InputText placeholder="Model" />
+
+      <BidContainer>
+        <InputNumber placeholder="Min bid" />
+
+        <InputNumber placeholder="Max bid" />
+      </BidContainer>
+
+      <Checkbox label="Only favorite" />
+    </>
+  );
+}
+
+function Home() {
   const pageSizeOptions = [
     { value: "6", label: "6 vehicles" },
     { value: "12", label: "12 vehicles" },
@@ -29,18 +48,12 @@ function Home() {
   return (
     <Container>
       <FiltersContainer>
-        <Select options={options} placeholder="Make" />
-
-        <InputText placeholder="Model" />
-
-        <BidContainer>
-          <InputNumber placeholder="Min bid" />
-
-          <InputNumber placeholder="Max bid" />
-        </BidContainer>
-
-        <Checkbox label="Only favorite" />
+        <FilterFields />
       </FiltersContainer>
+
+      <NavigationRails>
+        <FilterFields />
+      </NavigationRails>
 
       <ContentContainer>
         <Header>
@@ -142,19 +155,33 @@ function Home() {
 const Container = styled.div`
   gap: 32px;
   width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
   display: flex;
-  padding: 32px 0px;
+  padding: 32px clamp(16px, 3vw, 40px);
   justify-content: center;
+
+  @media (max-width: 900px) {
+    padding-top: 20px;
+  }
 `;
 
 const FiltersContainer = styled.div`
   gap: 16px;
+  width: 220px;
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
 
 const ContentContainer = styled.div`
   gap: 16px;
+  width: 100%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
 `;
@@ -163,35 +190,61 @@ const Header = styled.div`
   gap: 16px;
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+
+  @media (max-width: 600px) {
+    align-items: stretch;
+  }
 `;
 
 const CardContainer = styled.div`
   gap: 16px;
   display: grid;
-  grid-template-columns: repeat(3, 380px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
 `;
 
 const Footer = styled.div`
   gap: 16px;
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+
+  @media (max-width: 600px) {
+    align-items: stretch;
+    flex-direction: column;
+  }
 `;
 
 const PageSizeContainer = styled.div`
   flex-shrink: 0;
   margin-left: auto;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    margin-left: 0;
+  }
 `;
 
 const OrderByContainer = styled.div`
   flex-shrink: 0;
   margin-left: auto;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    margin-left: 0;
+  }
 `;
 
 const BidContainer = styled.div`
   gap: 8px;
   display: flex;
+
+  > * {
+    flex: 1;
+    min-width: 0;
+  }
 `;
 
 export default Home;

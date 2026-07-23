@@ -51,7 +51,16 @@ function Pagination({ totalPages, initialPage = 1, onPageChange }: Readonly<Pagi
 const PaginationContainer = styled.nav`
   gap: 6px;
   display: flex;
+  max-width: 100%;
   align-items: center;
+
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
+
+  @media (max-width: 380px) {
+    gap: 4px;
+  }
 `;
 
 const PageButton = styled.button<{ $active?: boolean }>`
@@ -66,6 +75,11 @@ const PageButton = styled.button<{ $active?: boolean }>`
   color: ${({ $active }) => ($active ? "var(--color-white)" : "#111216")};
   background: ${({ $active }) => ($active ? "#0875c9" : "var(--color-white)")};
   border: 1px solid ${({ $active }) => ($active ? "#0875c9" : "var(--border-color)")};
+
+  @media (max-width: 380px) {
+    width: 34px;
+    height: 34px;
+  }
 
   &:disabled {
     color: #a0a4a8;
