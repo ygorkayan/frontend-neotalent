@@ -37,7 +37,7 @@ export const filterByModel = (setFilters: React.Dispatch<React.SetStateAction<Fi
     return;
   }
 
-  const filterFunction = (car: Car) => car.model.includes(filterValue);
+  const filterFunction = (car: Car) => car.model.toLocaleLowerCase().includes(filterValue.toLocaleLowerCase());
 
   const newFilter: Filter = { name: filterName, value: filterValue, filter: filterFunction };
 
@@ -48,7 +48,7 @@ export const filterByMinBid =
   (setFilters: React.Dispatch<React.SetStateAction<Filter[]>>) => (minBid: number | null) => {
     const filterName = "minBid";
 
-    if (minBid === null || Number.isNaN(minBid) || minBid <= 0) {
+    if (minBid === null || Number.isNaN(minBid)) {
       updateFilter(setFilters, filterName);
       return;
     }
@@ -65,7 +65,7 @@ export const filterByMaxBid =
   (setFilters: React.Dispatch<React.SetStateAction<Filter[]>>) => (maxBid: number | null) => {
     const filterName = "maxBid";
 
-    if (maxBid === null || Number.isNaN(maxBid) || maxBid <= 0) {
+    if (maxBid === null || Number.isNaN(maxBid)) {
       updateFilter(setFilters, filterName);
       return;
     }

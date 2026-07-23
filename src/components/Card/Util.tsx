@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 
-const INITIAL_TIMESTAMP = Date.now();
-
 export const useCountdown = (auctionStartsAt: string) => {
-  const [now, setNow] = useState(INITIAL_TIMESTAMP);
+  const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
     const interval = window.setInterval(() => setNow(Date.now()), 60_000);
