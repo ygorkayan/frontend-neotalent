@@ -8,19 +8,9 @@ function Pill(props: Readonly<PillProps>) {
   return (
     <PillComponent>
       {props.children}
-
-      <RemoveButton>×</RemoveButton>
     </PillComponent>
   );
 }
-
-const RemoveButton = styled.button`
-  border: none;
-  cursor: pointer;
-  font-size: 24px;
-  margin-left: 8px;
-  background-color: transparent;
-`;
 
 const PillComponent = styled.div`
   display: flex;

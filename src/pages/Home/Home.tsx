@@ -39,15 +39,26 @@ function Home() {
         <InputNumber placeholder="Max bid" value={maxBidSelectedValue} onChange={filters.filterByMaxBid} />
       </BidContainer>
 
-      <Checkbox label="Only favorite" value={favoriteSelectedValue} onChange={filters.filterByFavorite} />
+      <Checkbox label="Favorites only" value={favoriteSelectedValue} onChange={filters.filterByFavorite} />
     </>
   );
 
-  const pillsList = filters.filtersApplied.map((filter) => (
+  const pillsList = filters.filtersApplied.map((filter) => {
+
+    if(filter.name === "Favorite") {
+      return (
+        <Pill key={filter.name}>
+          {filter.name}s only
+        </Pill>
+      )
+    }
+
+    return (
     <Pill key={filter.name}>
       {filter.name}: {filter.value}
     </Pill>
-  ));
+  )
+  });
 
   const carsList = cars.map((car) => (
     <Card
@@ -146,7 +157,7 @@ const Header = styled.div`
 const CardContainer = styled.div`
   gap: 16px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
 `;
 
 const Footer = styled.div`
