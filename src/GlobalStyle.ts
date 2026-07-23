@@ -8,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
 
     --font-family: 'Roboto', sans-serif;
     
-    --border-radius: 8px;
+    --border-radius: 4px;
     --border-color: #504f4f;
     
     --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -25,7 +25,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: var(--font-family);
-    background-color: var(--color-gray);
+    background-color: var(--color-white);
   }
 
 `;

@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-import Box from "../../components/Box/Box";
 import Select from "../../components/Select/Select";
 import InputText from "../../components/InputText/InputText";
 import InputNumber from "../../components/InputNumber/InputNumber";
 import Checkbox from "../../components/Checkbox/Checkbox";
 import Button from "../../components/Button/Button";
 import Pill from "../../components/Pill/Pill";
+
+import Card from "../../components/Card/Card";
 
 function Home() {
   const options = [
@@ -21,36 +22,52 @@ function Home() {
   return (
     <Container>
       <FiltersContainer>
-        <Box label="Filters">
-          <Select options={options} placeholder="123" />
+        <Select options={options} placeholder="Make" />
 
-          <InputText placeholder="Model" />
+        <InputText placeholder="Model" />
 
+        <BidContainer>
           <InputNumber placeholder="Min bid" />
 
           <InputNumber placeholder="Max bid" />
+        </BidContainer>
 
-          <Checkbox label="Only favorite" />
+        <Checkbox label="Only favorite" />
 
+        <ButtonContainer>
           <Button>Clear filters</Button>
+        </ButtonContainer>
 
-          <Pill>ASDFGH</Pill>
-        </Box>
+        <Pill>ASDFGH</Pill>
       </FiltersContainer>
+
+      <Card />
     </Container>
   );
 }
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  height: 100vh;
+  gap: 32px;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 16px;
+`;
+
+const BidContainer = styled.div`
+  display: flex;
+  gap: 8px;
 `;
 
 const FiltersContainer = styled.div`
-  height: 50vh;
+  gap: 16px;
+  width: 40vh;
+  display: flex;
+  flex-direction: column;
 `;
 
 export default Home;
