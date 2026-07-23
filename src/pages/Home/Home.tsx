@@ -14,18 +14,18 @@ import Card from "../../components/Card/Card";
 import { useCars, orderbyOptions, pageSizeOptions } from "../../model/cars";
 
 function Home() {
-  const { cars, makes, filters, filtersApplied } = useCars();
+  const { cars, makes, filters, favoriteCar, orderBy } = useCars();
 
   const makeOptions = makes.map((make) => ({
     value: make,
     label: make,
   }));
 
-  const makeSelectedValue = filtersApplied.find((filter) => filter.name === "Make")?.value || "";
-  const modelSelectedValue = filtersApplied.find((filter) => filter.name === "Model")?.value || "";
-  const minBidSelectedValue = filtersApplied.find((filter) => filter.name === "Min Bid")?.value || "";
-  const maxBidSelectedValue = filtersApplied.find((filter) => filter.name === "Max Bid")?.value || "";
-  const favoriteSelectedValue = filtersApplied.find((filter) => filter.name === "Favorite")?.value || "";
+  const makeSelectedValue = filters.filtersApplied.find((filter) => filter.name === "Make")?.value || "";
+  const modelSelectedValue = filters.filtersApplied.find((filter) => filter.name === "Model")?.value || "";
+  const minBidSelectedValue = filters.filtersApplied.find((filter) => filter.name === "Min Bid")?.value || "";
+  const maxBidSelectedValue = filters.filtersApplied.find((filter) => filter.name === "Max Bid")?.value || "";
+  const favoriteSelectedValue = filters.filtersApplied.find((filter) => filter.name === "Favorite")?.value || "";
 
   const FilterFields = (
     <>
@@ -43,7 +43,7 @@ function Home() {
     </>
   );
 
-  const pillsList = filtersApplied.map((filter) => (
+  const pillsList = filters.filtersApplied.map((filter) => (
     <Pill key={filter.name}>
       {filter.name}: {filter.value}
     </Pill>
@@ -51,16 +51,17 @@ function Home() {
 
   const carsList = cars.map((car) => (
     <Card
-      key={`${car.make}-${car.model}-${car.year}`}
+      key={car.id}
       year={car.year}
-      model={car.model}
-      favorite={car.favorite}
-      engineSize={car.engineSize}
-      fuelType={car.fuelType}
-      startingBid={car.startingBid}
-      mileage={car.mileage}
       make={car.make}
+      model={car.model}
+      mileage={car.mileage}
+      fuelType={car.fuelType}
+      isFavorite={car.favorite}
+      engineSize={car.engineSize}
+      startingBid={car.startingBid}
       auctionStartsAt={car.auctionDateTime}
+      onFavoriteClick={() => favoriteCar(car.id)}
     />
   ));
 
@@ -74,10 +75,15 @@ function Home() {
 
           {pillsList}
 
-          {filtersApplied.length > 0 && <Button onClick={filters.clearFilters}>Clear filters</Button>}
+          {filters.filtersApplied.length > 0 && <Button onClick={filters.clearFilters}>Clear filters</Button>}
 
           <OrderByContainer>
-            <Select options={orderbyOptions} placeholder="Order by" />
+            <Select
+              options={orderbyOptions}
+              value={orderBy.currentOrder}
+              onChange={orderBy.setOrder}
+              placeholder="Order by"
+            />
           </OrderByContainer>
         </Header>
 

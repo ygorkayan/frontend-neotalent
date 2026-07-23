@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { type Car, getCars } from "../services/getCars";
+
 import {
   filterByMake,
   filterByModel,
@@ -8,20 +9,22 @@ import {
   filterByFavorite,
   clearFilters,
   formatFilters,
+  favoriteCar,
+  orderCars,
 } from "./utils";
 
 export const orderbyOptions = [
-  { value: "price-asc", label: "Make: Alphabetical order" },
-  { value: "price-desc", label: "Make: Alphabetical inverse order" },
+  { value: "make-asc", label: "Make: Alphabetical ascendant" },
+  { value: "make-desc", label: "Make: Alphabetical descendant" },
 
-  { value: "year-asc", label: "Starting Bid: Low to High" },
-  { value: "year-desc", label: "Starting Bid: High to Low" },
+  { value: "bid-asc", label: "Starting Bid: ascendant" },
+  { value: "bid-desc", label: "Starting Bid: descendant" },
 
-  { value: "year-asc", label: "Milage: Low to High" },
-  { value: "year-desc", label: "Milage: High to Low" },
+  { value: "milage-asc", label: "Milage: ascendant" },
+  { value: "milage-desc", label: "Milage: descendant" },
 
-  { value: "year-asc", label: "Auction date: Oldest to Newest" },
-  { value: "year-desc", label: "Auction date: Newest to Oldest" },
+  { value: "auction-asc", label: "Auction date: Oldest to Newest" },
+  { value: "auction-desc", label: "Auction date: Newest to Oldest" },
 ];
 
 export const pageSizeOptions = [
@@ -38,6 +41,7 @@ export type Filter = {
 
 export const useCars = () => {
   const [cars, setCars] = useState<Car[]>([]);
+  const [order, setOrder] = useState<string>();
   const [filters, setFilters] = useState<Filter[]>([]);
 
   const makes = Array.from(new Set(cars.map((car) => car.make)));
@@ -57,7 +61,12 @@ export const useCars = () => {
       filterByMaxBid: filterByMaxBid(setFilters),
       filterByFavorite: filterByFavorite(setFilters),
       clearFilters: clearFilters(setFilters),
+      filtersApplied: formatFilters(filters),
     },
-    filtersApplied: formatFilters(filters),
+    favoriteCar: favoriteCar(setCars),
+    orderBy: {
+      currentOrder: order,
+      setOrder: orderCars(cars, setOrder, setCars),
+    },
   };
 };

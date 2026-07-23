@@ -119,3 +119,49 @@ export const formatFilters = (filters: Filter[]): FilterWhiteoutFn[] => {
     };
   });
 };
+
+export const favoriteCar = (setCars: React.Dispatch<React.SetStateAction<Car[]>>) => (id: number) => {
+  setCars((prevCars) => prevCars.map((car) => (car.id === id ? { ...car, favorite: !car.favorite } : car)));
+};
+
+export const orderCars =
+  (
+    cars: Car[],
+    setOrder: React.Dispatch<React.SetStateAction<string | undefined>>,
+    setCars: React.Dispatch<React.SetStateAction<Car[]>>,
+  ) =>
+  (order: string) => {
+    const sortedCars = [...cars];
+
+    switch (order) {
+      case "make-asc":
+        sortedCars.sort((a, b) => a.make.localeCompare(b.make));
+        break;
+      case "make-desc":
+        sortedCars.sort((a, b) => b.make.localeCompare(a.make));
+        break;
+      case "bid-asc":
+        sortedCars.sort((a, b) => a.startingBid - b.startingBid);
+        break;
+      case "bid-desc":
+        sortedCars.sort((a, b) => b.startingBid - a.startingBid);
+        break;
+      case "milage-asc":
+        sortedCars.sort((a, b) => a.mileage - b.mileage);
+        break;
+      case "milage-desc":
+        sortedCars.sort((a, b) => b.mileage - a.mileage);
+        break;
+      case "auction-asc":
+        sortedCars.sort((a, b) => new Date(a.auctionDateTime).getTime() - new Date(b.auctionDateTime).getTime());
+        break;
+      case "auction-desc":
+        sortedCars.sort((a, b) => new Date(b.auctionDateTime).getTime() - new Date(a.auctionDateTime).getTime());
+        break;
+      default:
+        break;
+    }
+
+    setOrder(order);
+    setCars(sortedCars);
+  };

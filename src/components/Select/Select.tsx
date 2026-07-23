@@ -12,7 +12,7 @@ function Select(props: Readonly<SelectProps>) {
 
   return (
     <Container>
-      <SelectComponent id={id} value={props.value} defaultValue="" onChange={(e) => props?.onChange?.(e.target.value)}>
+      <SelectComponent id={id} value={props.value} onChange={(e) => props?.onChange?.(e.target.value)}>
         <option value="">
           {props.placeholder}
         </option>

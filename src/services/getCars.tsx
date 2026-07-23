@@ -1,9 +1,11 @@
 // it's just a mock data for now, in a real app this would be fetched from an API
 export function getCars() {
+  console.log("Fetching cars...");
   return cars;
 }
 
 export interface Car {
+  id: number;
   make: string;
   model: string;
   engineSize: string;
@@ -35,6 +37,7 @@ export interface Car {
 
 const cars: Car[] = [
   {
+    id: 1,
     make: "BMW",
     model: "320d",
     engineSize: "2.0L",
@@ -64,6 +67,7 @@ const cars: Car[] = [
     },
   },
   {
+    id: 2,
     make: "Audi",
     model: "A3",
     engineSize: "1.6L",
@@ -93,6 +97,7 @@ const cars: Car[] = [
     },
   },
   {
+    id: 3,
     make: "Tesla",
     model: "Model 3",
     engineSize: "Electric",
@@ -122,6 +127,7 @@ const cars: Car[] = [
     },
   },
   {
+    id: 4,
     make: "Mercedes-Benz",
     model: "C300",
     engineSize: "2.0L",
@@ -151,6 +157,7 @@ const cars: Car[] = [
     },
   },
   {
+    id: 5,
     make: "Volkswagen",
     model: "Golf",
     engineSize: "1.5L",
@@ -180,6 +187,7 @@ const cars: Car[] = [
     },
   },
   {
+    id: 6,
     make: "Toyota",
     model: "Corolla",
     engineSize: "1.8L",
@@ -209,6 +217,7 @@ const cars: Car[] = [
     },
   },
   {
+    id: 7,
     make: "Ford",
     model: "Focus",
     engineSize: "1.0L",
@@ -238,6 +247,7 @@ const cars: Car[] = [
     },
   },
   {
+    id: 8,
     make: "Volvo",
     model: "XC40",
     engineSize: "2.0L",
@@ -267,6 +277,7 @@ const cars: Car[] = [
     },
   },
   {
+    id: 9,
     make: "Nissan",
     model: "Leaf",
     engineSize: "Electric",
@@ -296,6 +307,7 @@ const cars: Car[] = [
     },
   },
   {
+    id: 10,
     make: "Honda",
     model: "Civic",
     engineSize: "1.5L",
@@ -325,6 +337,7 @@ const cars: Car[] = [
     },
   },
   {
+    id: 11,
     make: "Kia",
     model: "Sportage",
     engineSize: "1.6L",
@@ -354,6 +367,7 @@ const cars: Car[] = [
     },
   },
   {
+    id: 12,
     make: "Mazda",
     model: "CX-5",
     engineSize: "2.0L",
@@ -383,6 +397,7 @@ const cars: Car[] = [
     },
   },
   {
+    id: 13,
     make: "Renault",
     model: "Clio",
     engineSize: "1.0L",

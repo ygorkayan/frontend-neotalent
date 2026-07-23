@@ -4,8 +4,6 @@ import styled from "styled-components";
 function Checkbox(props: Readonly<CheckboxProps>) {
   const id = useId();
 
-  console.log(props);
-
   return (
     <Container>
       <CheckboxComponent

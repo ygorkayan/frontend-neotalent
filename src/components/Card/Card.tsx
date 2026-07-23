@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { CalendarIcon, FuelIcon, RoadIcon, TimerIcon, FavoriteIcon } from "./Icons";
 import { useCountdown } from "./Util";
@@ -12,7 +11,8 @@ interface CardProps {
   fuelType: string;
   year: number;
   mileage: number;
-  favorite: boolean;
+  isFavorite: boolean;
+  onFavoriteClick: () => void;
 }
 
 function Card({
@@ -24,9 +24,9 @@ function Card({
   year,
   fuelType,
   mileage,
-  favorite,
+  isFavorite,
+  onFavoriteClick,
 }: Readonly<CardProps>) {
-  const [isFavorite, setIsFavorite] = useState(favorite);
   const { remainingDays, remainingHours, auctionHasStarted, date } = useCountdown(auctionStartsAt);
 
   return (
@@ -39,7 +39,7 @@ function Card({
           aria-pressed={isFavorite}
           aria-label={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
           title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
-          onClick={() => setIsFavorite((favorite) => !favorite)}
+          onClick={() => onFavoriteClick()}
         >
           <FavoriteIcon $filled={isFavorite} />
         </FavoriteButton>
