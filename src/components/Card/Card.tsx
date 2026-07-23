@@ -32,13 +32,13 @@ function Card({
   return (
     <CardContainer>
       <Gallery>
-        <CarImage src="/images/mercedes-c300.png" alt="Mercedes-Benz C 300 prata visto de frente" />
+        <CarImage src="/images/car-placeholder.png" alt="car image" />
 
         <FavoriteButton
           type="button"
           aria-pressed={isFavorite}
-          aria-label={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
-          title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+          title={isFavorite ? "Remove from favorites" : "Add to favorites"}
           onClick={() => onFavoriteClick()}
         >
           <FavoriteIcon $filled={isFavorite} />
