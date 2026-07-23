@@ -8,6 +8,7 @@ import Button from "../../components/Button/Button";
 import Pill from "../../components/Pill/Pill";
 import Pagination from "../../components/Pagination/Pagination";
 import NavigationRails from "../../components/NavigationRails/NavigationRails";
+import FallBackMsg from "../../components/FallBackMsg/FallBackMsg";
 
 import Card from "../../components/Card/Card";
 
@@ -93,8 +94,8 @@ function Home() {
           </OrderByContainer>
         </Header>
 
-        {carsList.length > 1 && <CardContainer>{carsList}</CardContainer>}
-        {carsList.length < 1 && "msg bonita"}
+        {carsList.length > 0 && <CardContainer>{carsList}</CardContainer>}
+        {carsList.length === 0 && <FallBackMsg />}
 
         <Footer>
           {pagination.totalPages > 0 && (
