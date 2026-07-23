@@ -20,6 +20,12 @@ const options = [
   { value: "goldfish", label: "Goldfish" },
 ];
 
+const pageSizeOptions = [
+  { value: "6", label: "6 vehicles" },
+  { value: "12", label: "12 vehicles" },
+  { value: "24", label: "24 vehicles" },
+];
+
 function FilterFields() {
   return (
     <>
@@ -39,24 +45,20 @@ function FilterFields() {
 }
 
 function Home() {
-  const pageSizeOptions = [
-    { value: "6", label: "6 vehicles" },
-    { value: "12", label: "12 vehicles" },
-    { value: "24", label: "24 vehicles" },
-  ];
-
   return (
     <Container>
       <FiltersContainer>
         <FilterFields />
       </FiltersContainer>
 
-      <NavigationRails>
-        <FilterFields />
-      </NavigationRails>
-
       <ContentContainer>
         <Header>
+          <NavigationRails>
+            <FilterFields />
+          </NavigationRails>
+
+          <Pill>ASDFGH</Pill>
+
           <Pill>ASDFGH</Pill>
 
           <Button>Clear filters</Button>
@@ -155,10 +157,10 @@ function Home() {
 const Container = styled.div`
   gap: 32px;
   width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
   display: flex;
-  padding: 32px clamp(16px, 3vw, 40px);
+  padding: 32px;
+  margin: 0 auto;
+  max-width: 1440px;
   justify-content: center;
 
   @media (max-width: 900px) {
@@ -192,10 +194,6 @@ const Header = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-
-  @media (max-width: 600px) {
-    align-items: stretch;
-  }
 `;
 
 const CardContainer = styled.div`
@@ -212,7 +210,6 @@ const Footer = styled.div`
   align-items: center;
 
   @media (max-width: 600px) {
-    align-items: stretch;
     flex-direction: column;
   }
 `;

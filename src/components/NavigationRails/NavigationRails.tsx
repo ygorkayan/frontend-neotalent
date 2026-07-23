@@ -1,4 +1,4 @@
-import { useEffect, useId, useState, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import styled from "styled-components";
 
 interface NavigationRailsProps {
@@ -6,25 +6,10 @@ interface NavigationRailsProps {
   title?: string;
 }
 
-function NavigationRails({
-  children,
-  title = "Filters",
-}: Readonly<NavigationRailsProps>) {
+function NavigationRails({ children, title = "Filters" }: Readonly<NavigationRailsProps>) {
   const [isOpen, setIsOpen] = useState(false);
   const panelId = useId();
   const titleId = useId();
-
-  useEffect(() => {
-    function closeOnEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setIsOpen(false);
-      }
-    }
-
-    document.addEventListener("keydown", closeOnEscape);
-
-    return () => document.removeEventListener("keydown", closeOnEscape);
-  }, []);
 
   return (
     <MobileNavigation>
@@ -46,21 +31,10 @@ function NavigationRails({
         onClick={() => setIsOpen(false)}
       />
 
-      <RailPanel
-        id={panelId}
-        $open={isOpen}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        aria-hidden={!isOpen}
-      >
+      <RailPanel id={panelId} $open={isOpen} role="dialog" aria-modal="true" aria-hidden={!isOpen}>
         <RailHeader>
           <RailTitle id={titleId}>{title}</RailTitle>
-          <CloseButton
-            type="button"
-            aria-label="Close filters"
-            onClick={() => setIsOpen(false)}
-          >
+          <CloseButton type="button" aria-label="Close filters" onClick={() => setIsOpen(false)}>
             <span aria-hidden="true">×</span>
           </CloseButton>
         </RailHeader>
@@ -88,78 +62,61 @@ const MobileNavigation = styled.div`
 `;
 
 const RailButton = styled.button`
-  position: fixed;
-  z-index: 30;
-  top: 50%;
-  left: 0;
-  width: 48px;
-  height: 64px;
-  border: 0;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
   display: grid;
   cursor: pointer;
-  color: var(--color-white);
   place-items: center;
-  border-radius: 0 12px 12px 0;
-  background: #0875c9;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
-  transform: translateY(-50%);
-
-  &:focus-visible {
-    outline: 3px solid #87c8fa;
-    outline-offset: 3px;
-  }
+  background: var(--color-white);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
 `;
 
 const Overlay = styled.button<{ $open: boolean }>`
-  position: fixed;
   z-index: 40;
   inset: 0;
   border: 0;
   width: 100%;
   height: 100%;
+  position: fixed;
   cursor: default;
-  visibility: ${({ $open }) => ($open ? "visible" : "hidden")};
-  opacity: ${({ $open }) => ($open ? 1 : 0)};
   background: rgba(9, 10, 13, 0.46);
-  transition:
-    opacity 180ms ease,
-    visibility 180ms ease;
+  opacity: ${({ $open }) => ($open ? 1 : 0)};
+  visibility: ${({ $open }) => ($open ? "visible" : "hidden")};
 `;
 
 const RailPanel = styled.aside<{ $open: boolean }>`
-  position: fixed;
-  z-index: 50;
   top: 0;
   left: 0;
-  width: min(84vw, 320px);
-  height: 100dvh;
+  z-index: 50;
   padding: 22px;
-  visibility: ${({ $open }) => ($open ? "visible" : "hidden")};
+  height: 100dvh;
+  position: fixed;
+  width: min(84vw, 320px);
   background: var(--color-white);
   box-shadow: 8px 0 24px rgba(0, 0, 0, 0.18);
+  visibility: ${({ $open }) => ($open ? "visible" : "hidden")};
   transform: translateX(${({ $open }) => ($open ? "0" : "-100%")});
-  transition:
-    transform 220ms ease,
-    visibility 220ms ease;
 `;
 
 const RailHeader = styled.div`
   display: flex;
-  padding-bottom: 20px;
   align-items: center;
+  padding-bottom: 20px;
   justify-content: space-between;
   border-bottom: 1px solid #d4d8dd;
 `;
 
 const RailTitle = styled.h2`
-  color: #111216;
   font-size: 22px;
+  color: #111216;
 `;
 
 const CloseButton = styled.button`
+  border: 0;
   width: 40px;
   height: 40px;
-  border: 0;
   display: grid;
   cursor: pointer;
   color: #111216;
@@ -194,11 +151,11 @@ const RailContent = styled.div`
 `;
 
 const Icon = styled.svg`
+  fill: none;
   width: 27px;
   height: 27px;
-  fill: none;
-  stroke: currentColor;
   stroke-width: 2;
+  stroke: currentColor;
   stroke-linecap: round;
 `;
 
