@@ -55,7 +55,7 @@ const cars: Car[] = [
     fuelType: "Diesel",
     year: 2019,
     mileage: 45000,
-    auctionDateTime: "2026-04-20T12:00:00",
+    auctionDateTime: "2026-07-23T23:00:00+02:00",
     startingBid: 12000,
     favorite: false,
     details: {
@@ -85,7 +85,7 @@ const cars: Car[] = [
     fuelType: "Petrol",
     year: 2018,
     mileage: 60000,
-    auctionDateTime: "2026-04-22T15:30:00",
+    auctionDateTime: "2026-07-24T23:00:00+02:00",
     startingBid: 9000,
     favorite: true,
     details: {
@@ -115,7 +115,7 @@ const cars: Car[] = [
     fuelType: "Electric",
     year: 2021,
     mileage: 20000,
-    auctionDateTime: "2026-04-25T10:00:00",
+    auctionDateTime: "2026-07-25T23:00:00+02:00",
     startingBid: 25000,
     favorite: false,
     details: {
@@ -145,7 +145,7 @@ const cars: Car[] = [
     fuelType: "Petrol",
     year: 2020,
     mileage: 38500,
-    auctionDateTime: "2026-05-02T11:30:00",
+    auctionDateTime: "2026-07-26T23:00:00+02:00",
     startingBid: 18500,
     favorite: true,
     details: {
@@ -175,7 +175,7 @@ const cars: Car[] = [
     fuelType: "Petrol",
     year: 2019,
     mileage: 52000,
-    auctionDateTime: "2026-05-04T14:00:00",
+    auctionDateTime: "2026-07-27T23:00:00+02:00",
     startingBid: 10500,
     favorite: false,
     details: {
@@ -205,7 +205,7 @@ const cars: Car[] = [
     fuelType: "Hybrid",
     year: 2022,
     mileage: 17000,
-    auctionDateTime: "2026-05-06T09:45:00",
+    auctionDateTime: "2026-07-28T23:00:00+02:00",
     startingBid: 16000,
     favorite: true,
     details: {
@@ -235,7 +235,7 @@ const cars: Car[] = [
     fuelType: "Petrol",
     year: 2017,
     mileage: 74500,
-    auctionDateTime: "2026-05-08T16:15:00",
+    auctionDateTime: "2026-07-29T23:00:00+02:00",
     startingBid: 6500,
     favorite: false,
     details: {
@@ -265,7 +265,7 @@ const cars: Car[] = [
     fuelType: "Diesel",
     year: 2020,
     mileage: 41000,
-    auctionDateTime: "2026-05-11T13:30:00",
+    auctionDateTime: "2026-07-30T23:00:00+02:00",
     startingBid: 21000,
     favorite: false,
     details: {
@@ -295,7 +295,7 @@ const cars: Car[] = [
     fuelType: "Electric",
     year: 2021,
     mileage: 29500,
-    auctionDateTime: "2026-05-14T10:20:00",
+    auctionDateTime: "2026-07-31T23:00:00+02:00",
     startingBid: 12500,
     favorite: true,
     details: {
@@ -325,7 +325,7 @@ const cars: Car[] = [
     fuelType: "Petrol",
     year: 2018,
     mileage: 56500,
-    auctionDateTime: "2026-05-16T12:45:00",
+    auctionDateTime: "2026-08-01T23:00:00+02:00",
     startingBid: 9800,
     favorite: false,
     details: {
@@ -355,7 +355,7 @@ const cars: Car[] = [
     fuelType: "Hybrid",
     year: 2023,
     mileage: 12000,
-    auctionDateTime: "2026-05-19T15:00:00",
+    auctionDateTime: "2026-08-02T23:00:00+02:00",
     startingBid: 23500,
     favorite: true,
     details: {
@@ -385,7 +385,7 @@ const cars: Car[] = [
     fuelType: "Petrol",
     year: 2019,
     mileage: 48000,
-    auctionDateTime: "2026-05-22T11:10:00",
+    auctionDateTime: "2026-08-03T23:00:00+02:00",
     startingBid: 14500,
     favorite: false,
     details: {
@@ -415,7 +415,7 @@ const cars: Car[] = [
     fuelType: "Petrol",
     year: 2020,
     mileage: 33500,
-    auctionDateTime: "2026-05-24T09:30:00",
+    auctionDateTime: "2026-08-04T23:00:00+02:00",
     startingBid: 8200,
     favorite: false,
     details: {
