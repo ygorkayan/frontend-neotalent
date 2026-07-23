@@ -1,4 +1,4 @@
-Link to see it online: <link>
+Link to see it online: frontend-neotalent.ygorkayan.com
 
 # Car Auction
 
