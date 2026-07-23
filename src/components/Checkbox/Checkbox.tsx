@@ -1,20 +1,30 @@
 import { useId } from "react";
 import styled from "styled-components";
 
-function InputNumber(props: Readonly<InputNumberProps>) {
+function Checkbox(props: Readonly<CheckboxProps>) {
   const id = useId();
+
+  console.log(props);
 
   return (
     <Container>
-      <CheckboxComponent type="checkbox" id={id} name={props.label} value="Bike" />
+      <CheckboxComponent
+        id={id}
+        type="checkbox"
+        name={props.label}
+        checked={props.value === "true"}
+        onChange={(event) => props.onChange?.(event.target.checked)}
+      />
 
       {props.label && <Label htmlFor={id}>{props.label}</Label>}
     </Container>
   );
 }
 
-interface InputNumberProps {
+interface CheckboxProps {
   label?: string;
+  value?: string;
+  onChange?: (checked: boolean) => void;
 }
 
 const Container = styled.div`
@@ -38,4 +48,4 @@ const CheckboxComponent = styled.input`
   border: 1px solid red;
 `;
 
-export default InputNumber;
+export default Checkbox;

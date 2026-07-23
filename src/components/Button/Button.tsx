@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 function Button(props: Readonly<ButtonProps>) {
-  return <ButtonComponent>{props.children}</ButtonComponent>;
+  return <ButtonComponent onClick={props.onClick}>{props.children}</ButtonComponent>;
 }
 
 interface ButtonProps {
   children?: React.ReactNode;
+  onClick?: () => void;
 }
 
 const ButtonComponent = styled.button`

@@ -6,13 +6,21 @@ function InputNumber(props: Readonly<InputNumberProps>) {
 
   return (
     <Container>
-      <InputNumberComponent type="number" id={id} placeholder={props.placeholder} />
+      <InputNumberComponent
+        type="number"
+        id={id}
+        value={props.value}
+        placeholder={props.placeholder}
+        onChange={(e) => props?.onChange?.(e.target.value === "" ? null : Number(e.target.value))}
+      />
     </Container>
   );
 }
 
 interface InputNumberProps {
   placeholder?: string;
+  value?: string;
+  onChange?: (value: number | null) => void;
 }
 
 const Container = styled.div`

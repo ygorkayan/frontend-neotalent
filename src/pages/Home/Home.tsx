@@ -13,38 +13,41 @@ import Card from "../../components/Card/Card";
 
 import { useCars, orderbyOptions, pageSizeOptions } from "../../model/cars";
 
-const options = [
-  { value: "dog", label: "Dog" },
-  { value: "cat", label: "Cat" },
-  { value: "hamster", label: "Hamster" },
-  { value: "parrot", label: "Parrot" },
-  { value: "spider", label: "Spider" },
-  { value: "goldfish", label: "Goldfish" },
-];
-
 function Home() {
-  const { cars, makes, filters } = useCars();
+  const { cars, makes, filters, filtersApplied } = useCars();
 
   const makeOptions = makes.map((make) => ({
     value: make,
     label: make,
   }));
 
+  const makeSelectedValue = filtersApplied.find((filter) => filter.name === "Make")?.value || "";
+  const modelSelectedValue = filtersApplied.find((filter) => filter.name === "Model")?.value || "";
+  const minBidSelectedValue = filtersApplied.find((filter) => filter.name === "Min Bid")?.value || "";
+  const maxBidSelectedValue = filtersApplied.find((filter) => filter.name === "Max Bid")?.value || "";
+  const favoriteSelectedValue = filtersApplied.find((filter) => filter.name === "Favorite")?.value || "";
+
   const FilterFields = (
     <>
-      <Select options={makeOptions} placeholder="Make" onChange={filters.filterByMake} />
+      <Select options={makeOptions} value={makeSelectedValue} placeholder="Make" onChange={filters.filterByMake} />
 
-      <InputText placeholder="Model" />
+      <InputText placeholder="Model" value={modelSelectedValue} onChange={filters.filterByModel} />
 
       <BidContainer>
-        <InputNumber placeholder="Min bid" />
+        <InputNumber placeholder="Min bid" value={minBidSelectedValue} onChange={filters.filterByMinBid} />
 
-        <InputNumber placeholder="Max bid" />
+        <InputNumber placeholder="Max bid" value={maxBidSelectedValue} onChange={filters.filterByMaxBid} />
       </BidContainer>
 
-      <Checkbox label="Only favorite" />
+      <Checkbox label="Only favorite" value={favoriteSelectedValue} onChange={filters.filterByFavorite} />
     </>
   );
+
+  const pillsList = filtersApplied.map((filter) => (
+    <Pill key={filter.name}>
+      {filter.name}: {filter.value}
+    </Pill>
+  ));
 
   const carsList = cars.map((car) => (
     <Card
@@ -69,11 +72,9 @@ function Home() {
         <Header>
           <NavigationRails>{FilterFields}</NavigationRails>
 
-          <Pill>ASDFGH</Pill>
+          {pillsList}
 
-          <Pill>ASDFGH</Pill>
-
-          <Button>Clear filters</Button>
+          {filtersApplied.length > 0 && <Button onClick={filters.clearFilters}>Clear filters</Button>}
 
           <OrderByContainer>
             <Select options={orderbyOptions} placeholder="Order by" />

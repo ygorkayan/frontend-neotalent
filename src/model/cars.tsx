@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
 import { type Car, getCars } from "../services/getCars";
+import {
+  filterByMake,
+  filterByModel,
+  filterByMinBid,
+  filterByMaxBid,
+  filterByFavorite,
+  clearFilters,
+  formatFilters,
+} from "./utils";
 
 export const orderbyOptions = [
   { value: "price-asc", label: "Make: Alphabetical order" },
@@ -21,51 +30,34 @@ export const pageSizeOptions = [
   { value: "24", label: "24 vehicles" },
 ];
 
+export type Filter = {
+  name: string;
+  value: string;
+  filter: (car: Car) => boolean;
+};
+
 export const useCars = () => {
   const [cars, setCars] = useState<Car[]>([]);
-  const [filteredCars, setFilteredCars] = useState<Car[]>([]);
+  const [filters, setFilters] = useState<Filter[]>([]);
 
   const makes = Array.from(new Set(cars.map((car) => car.make)));
 
   useEffect(() => {
     const fetchedCars = getCars();
     setCars(fetchedCars);
-    setFilteredCars(fetchedCars);
   }, []);
 
-  const filterByMake = (make: string) => {
-    const filtered = cars.filter((car) => car.make === make);
-    setFilteredCars(filtered);
-  };
-
-  const filterByModel = (model: string) => {
-    const filtered = cars.filter((car) => car.model === model);
-    setFilteredCars(filtered);
-  };
-
-  const filterByBid = (minBid: number, maxBid: number) => {
-    const filtered = cars.filter((car) => car.startingBid >= minBid && car.startingBid <= maxBid);
-    setFilteredCars(filtered);
-  };
-
-  const filterByFavorite = (favorite: boolean) => {
-    const filtered = cars.filter((car) => car.favorite === favorite);
-    setFilteredCars(filtered);
-  };
-
-  const clearFilters = () => {
-    setFilteredCars(cars);
-  };
-
   return {
-    cars: filteredCars,
+    cars: cars.filter((car) => filters.every((filter) => filter.filter(car))),
     makes,
     filters: {
-      filterByMake: filterByMake,
-      filterByModel: filterByModel,
-      filterByBid: filterByBid,
-      filterByFavorite: filterByFavorite,
-      clearFilters: clearFilters,
+      filterByMake: filterByMake(setFilters),
+      filterByModel: filterByModel(setFilters),
+      filterByMinBid: filterByMinBid(setFilters),
+      filterByMaxBid: filterByMaxBid(setFilters),
+      filterByFavorite: filterByFavorite(setFilters),
+      clearFilters: clearFilters(setFilters),
     },
+    filtersApplied: formatFilters(filters),
   };
 };

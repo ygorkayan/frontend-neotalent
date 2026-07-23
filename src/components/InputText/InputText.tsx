@@ -6,13 +6,21 @@ function InputText(props: Readonly<InputTextProps>) {
 
   return (
     <Container>
-      <InputTextComponent type="text" id={id} placeholder={props.placeholder} />
+      <InputTextComponent
+        id={id}
+        type="text"
+        value={props.value}
+        placeholder={props.placeholder}
+        onChange={(e) => props?.onChange?.(e.target.value)}
+      />
     </Container>
   );
 }
 
 interface InputTextProps {
   placeholder?: string;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 const Container = styled.div`

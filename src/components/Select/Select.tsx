@@ -12,8 +12,8 @@ function Select(props: Readonly<SelectProps>) {
 
   return (
     <Container>
-      <SelectComponent id={id} defaultValue="" onChange={(e) => props?.onChange?.(e.target.value)}>
-        <option value="" disabled>
+      <SelectComponent id={id} value={props.value} defaultValue="" onChange={(e) => props?.onChange?.(e.target.value)}>
+        <option value="">
           {props.placeholder}
         </option>
 
@@ -31,6 +31,7 @@ export type SelectOption = {
 interface SelectProps {
   options?: SelectOption[];
   placeholder?: string;
+  value?: string;
   onChange?: (value: string) => void;
 }
 
