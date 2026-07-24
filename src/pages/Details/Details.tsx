@@ -1,15 +1,20 @@
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
-import { CalendarIcon, FuelIcon, RoadIcon, TimerIcon } from "../../components/Card/Icons";
+import { CalendarIcon, FuelIcon, RoadIcon, TimerIcon, FavoriteIcon } from "../../components/Card/Icons";
 import { useCountdown, formatPrice } from "../../components/Card/Util";
 import { useCars } from "../../model/cars";
 import type { Car } from "../../services/getCars";
 import { formatDate } from "./utils";
+import { useEffect } from "react";
 
 function Details() {
   const { id } = useParams();
-  const { getCarById } = useCars();
+  const { getCarById, favoriteCar } = useCars();
   const car = getCarById(Number(id));
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
 
   if (!car) {
     return (
@@ -24,10 +29,10 @@ function Details() {
     );
   }
 
-  return <CarDetails car={car} />;
+  return <CarDetails car={car} favoriteCar={favoriteCar} />;
 }
 
-function CarDetails({ car }: Readonly<{ car: Car }>) {
+function CarDetails({ car, favoriteCar }: Readonly<{ car: Car; favoriteCar: (id: number) => void }>) {
   const { remainingDays, remainingHours, auctionHasStarted, date } = useCountdown(car.auctionDateTime);
 
   function renderEquipment(item: string) {
@@ -37,13 +42,29 @@ function CarDetails({ car }: Readonly<{ car: Car }>) {
   return (
     <Page>
       <PageHeader>
-        <BackLink className="back-button" to="/">← Back to vehicles</BackLink>
+        <BackLink className="back-button" to="/">
+          ← Back to vehicles
+        </BackLink>
         <VehicleReference>Vehicle #{car.id}</VehicleReference>
       </PageHeader>
 
       <Hero>
         <Gallery>
           <CarImage src="/images/car-placeholder.png" alt={`${car.make} ${car.model}`} />
+
+          <FavoriteButton
+            type="button"
+            className="favorite-button"
+            aria-pressed={car.favorite}
+            aria-label={car.favorite ? "Remove from favorites" : "Add to favorites"}
+            title={car.favorite ? "Remove from favorites" : "Add to favorites"}
+            onClick={(e) => {
+              e.stopPropagation();
+              favoriteCar(car.id);
+            }}
+          >
+            <FavoriteIcon $filled={car.favorite} />
+          </FavoriteButton>
         </Gallery>
 
         <Summary>
@@ -210,6 +231,7 @@ const Hero = styled.section`
 `;
 
 const Gallery = styled.div`
+  position: relative;
   min-height: 420px;
   background: var(--color-gray);
 
@@ -416,6 +438,34 @@ const NotFoundCard = styled.section`
   p {
     color: #696d73;
     line-height: 1.5;
+  }
+`;
+
+const FavoriteButton = styled.button`
+  top: clamp(8px, 2vw, 14px);
+  border: 0;
+  right: clamp(8px, 2vw, 14px);
+  width: clamp(42px, 5vw, 52px);
+  height: clamp(42px, 5vw, 52px);
+  display: grid;
+  cursor: pointer;
+  color: var(--color-blue);
+  position: absolute;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--color-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease;
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &:focus-visible {
+    outline-offset: 2px;
+    outline: 3px solid var(--color-blue);
   }
 `;
 
