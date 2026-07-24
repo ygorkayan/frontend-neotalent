@@ -37,7 +37,7 @@ function CarDetails({ car }: Readonly<{ car: Car }>) {
   return (
     <Page>
       <PageHeader>
-        <BackLink to="/">← Back to vehicles</BackLink>
+        <BackLink className="back-button" to="/">← Back to vehicles</BackLink>
         <VehicleReference>Vehicle #{car.id}</VehicleReference>
       </PageHeader>
 

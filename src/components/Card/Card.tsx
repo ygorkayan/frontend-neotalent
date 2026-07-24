@@ -34,12 +34,13 @@ function Card({
   const { remainingDays, remainingHours, auctionHasStarted, date } = useCountdown(auctionStartsAt);
 
   return (
-    <CardContainer onClick={() => navigate(`/vehicle/${id}`)}>
+    <CardContainer onClick={() => navigate(`/vehicle/${id}`)} className="card">
       <Gallery>
         <CarImage src="/images/car-placeholder.png" alt="car image" />
 
         <FavoriteButton
           type="button"
+          className="favorite-button"
           aria-pressed={isFavorite}
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
           title={isFavorite ? "Remove from favorites" : "Add to favorites"}

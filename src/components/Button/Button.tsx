@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 function Button(props: Readonly<ButtonProps>) {
-  return <ButtonComponent onClick={props.onClick}>{props.children}</ButtonComponent>;
+  return <ButtonComponent className="button" onClick={props.onClick}>{props.children}</ButtonComponent>;
 }
 
 interface ButtonProps {

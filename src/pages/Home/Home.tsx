@@ -30,7 +30,7 @@ function Home() {
 
   const FilterFields = (
     <>
-      <Select options={makeOptions} value={makeSelectedValue} placeholder="Make" onChange={filters.filterByMake} />
+      <Select className="select-make" options={makeOptions} value={makeSelectedValue} placeholder="Make" onChange={filters.filterByMake} />
 
       <InputText placeholder="Model" value={modelSelectedValue} onChange={filters.filterByModel} />
 
@@ -87,6 +87,7 @@ function Home() {
 
           <OrderByContainer>
             <Select
+              className="select-order-by"
               options={orderbyOptions}
               value={orderBy.currentOrder}
               onChange={orderBy.setOrder}
@@ -109,6 +110,7 @@ function Home() {
 
           <PageSizeContainer>
             <Select
+              className="select-car-per-page"
               options={pageSizeOptions}
               value={pagination.pageSize}
               placeholder="Vehicles per page"

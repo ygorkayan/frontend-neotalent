@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "test": "vitest run",
-    "preview": "vite preview"
+    "test:all": "vitest run && npx cypress run",
+    "preview": "vite preview",
+    "cypress": "npx cypress open"
   },
   "dependencies": {
     "react": "^19.2.7",
@@ -29,6 +31,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
     "babel-plugin-react-compiler": "^1.0.0",
+    "cypress": "^15.19.0",
     "eslint": "^10.6.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
