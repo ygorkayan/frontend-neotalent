@@ -57,8 +57,9 @@ Open the local address printed by Vite in your browser.
 | `npm run lint` | Run ESLint |
 | `npm run test` | Run the Vitest suite once |
 | `npm run cypress` | Open the interactive Cypress runner |
-| `npx cypress run` | Run all Cypress tests headlessly |
-| `npm run test:all` | Run Vitest, followed by headless Cypress |
+| `npx cypress run` | Run Cypress headlessly against an already running app |
+| `npm run test:e2e` | Start Vite, run Cypress headlessly, and stop Vite |
+| `npm run test:all` | Run Vitest, followed by the managed E2E suite |
 
 ## Testing
 
@@ -77,10 +78,16 @@ npm run dev
 Then use another terminal to run the end-to-end suite:
 
 ```bash
-npx cypress run
+npm run cypress
 ```
 
-Use `npm run cypress` instead when you want the interactive Cypress runner. The development server must also be running before `npm run test:all`, because that command includes the end-to-end suite.
+For a fully automated headless run, use:
+
+```bash
+npm run test:e2e
+```
+
+This command starts Vite, waits for `http://localhost:5173` to respond, runs Cypress, and then stops Vite—even if the test run fails. Use `npm run test:all` to run the Vitest suite before the same managed Cypress flow.
 
 ## Project structure
 
