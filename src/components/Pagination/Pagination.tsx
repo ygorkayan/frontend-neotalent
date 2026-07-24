@@ -74,8 +74,8 @@ const PageButton = styled.button<{ $active?: boolean }>`
   justify-content: center;
   border-radius: var(--border-radius);
   color: ${({ $active }) => ($active ? "var(--color-white)" : "#111216")};
-  background: ${({ $active }) => ($active ? "#0875c9" : "var(--color-white)")};
-  border: 1px solid ${({ $active }) => ($active ? "#0875c9" : "var(--border-color)")};
+  background: ${({ $active }) => ($active ? "var(--color-blue)" : "var(--color-white)")};
+  border: 1px solid ${({ $active }) => ($active ? "var(--color-blue)" : "var(--border-color)")};
 
   @media (max-width: 380px) {
     width: 34px;

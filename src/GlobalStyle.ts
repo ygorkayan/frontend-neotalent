@@ -5,6 +5,9 @@ export const GlobalStyle = createGlobalStyle`
  :root {
     --color-gray: #f2f6fa;
     --color-white: #ffffff;
+    --color-blue: #0875c9;
+    --color-marrow: #696d73;
+    --color-black: #111216;
 
     --font-family: 'Roboto', sans-serif;
     

@@ -53,52 +53,59 @@ export const useCars = () => {
   const firstCarIndex = (safeCurrentPage - 1) * pageSize;
   const paginatedCars = filteredCars.slice(firstCarIndex, firstCarIndex + pageSize);
 
-  const resetPage = () => setCurrentPage(1);
+  function resetPage() {
+    setCurrentPage(1);
+  }
 
-  const changePage = (page: number) => {
+  function changePage(page: number) {
     setCurrentPage(Math.min(Math.max(page, 1), Math.max(1, totalPages)));
-  };
+  }
 
-  const changePageSize = (value: string) => {
+  function changePageSize(value: string) {
     const nextPageSize = Number(value);
 
     if (!pageSizeOptions.some((option) => Number(option.value) === nextPageSize)) return;
 
     setPageSize(nextPageSize);
     resetPage();
-  };
+  }
 
-  const applyMakeFilter = (make: string) => {
+  function applyMakeFilter(make: string) {
     filterByMake(setFilters)(make);
     resetPage();
-  };
+  }
 
-  const applyModelFilter = (model: string) => {
+  function applyModelFilter(model: string) {
     filterByModel(setFilters)(model);
     resetPage();
-  };
+  }
 
-  const applyMinBidFilter = (minBid: number | null) => {
+  function applyMinBidFilter(minBid: number | null) {
     filterByMinBid(setFilters)(minBid);
     resetPage();
-  };
+  }
 
-  const applyMaxBidFilter = (maxBid: number | null) => {
+  function applyMaxBidFilter(maxBid: number | null) {
     filterByMaxBid(setFilters)(maxBid);
     resetPage();
-  };
+  }
 
-  const applyFavoriteFilter = (favorite: boolean) => {
+  function applyFavoriteFilter(favorite: boolean) {
     filterByFavorite(setFilters)(favorite);
     resetPage();
-  };
+  }
 
-  const removeFilters = () => {
+  function removeFilters() {
     clearFilters(setFilters)();
     resetPage();
-  };
+  }
+
+  function getCarById(id: number) {
+    return cars.find((car) => car.id === id);
+  }
 
   return {
+    getCarById,
     cars: paginatedCars,
     makes,
     filters: {

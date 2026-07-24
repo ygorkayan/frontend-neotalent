@@ -3,6 +3,7 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { Car } from "../../services/getCars";
@@ -53,6 +54,7 @@ const mockedUseCars = vi.mocked(useCars);
 
 function createUseCarsResult(): ReturnType<typeof useCars> {
   return {
+    getCarById: vi.fn(),
     cars: [car],
     makes: ["BMW", "Audi"],
     filters: {
@@ -79,6 +81,14 @@ function createUseCarsResult(): ReturnType<typeof useCars> {
   };
 }
 
+function renderHome() {
+  return render(
+    <MemoryRouter>
+      <Home />
+    </MemoryRouter>,
+  );
+}
+
 beforeEach(() => {
   mockedUseCars.mockReturnValue(createUseCarsResult());
 });
@@ -94,7 +104,7 @@ describe("Home", () => {
     const useCarsResult = createUseCarsResult();
     mockedUseCars.mockReturnValue(useCarsResult);
 
-    render(<Home />);
+    renderHome();
 
     expect(screen.getByText("BMW 320d")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Add to favorites" }));
@@ -107,7 +117,7 @@ describe("Home", () => {
     useCarsResult.pagination.totalPages = 0;
     mockedUseCars.mockReturnValue(useCarsResult);
 
-    render(<Home />);
+    renderHome();
 
     expect(screen.getByRole("status")).toHaveTextContent("No vehicles found");
     expect(screen.queryByRole("navigation", { name: "Pagination" })).not.toBeInTheDocument();
@@ -119,7 +129,7 @@ describe("Home", () => {
     useCarsResult.filters.filtersApplied = [{ name: "Make", value: "BMW" }];
     mockedUseCars.mockReturnValue(useCarsResult);
 
-    render(<Home />);
+    renderHome();
 
     fireEvent.change(screen.getAllByPlaceholderText("Model")[0], { target: { value: "320d" } });
     await user.click(screen.getByRole("button", { name: "Clear filters" }));
@@ -134,7 +144,7 @@ describe("Home", () => {
     const useCarsResult = createUseCarsResult();
     mockedUseCars.mockReturnValue(useCarsResult);
 
-    render(<Home />);
+    renderHome();
 
     await user.click(screen.getByRole("button", { name: "2" }));
     await user.selectOptions(screen.getByDisplayValue("6 vehicles"), "12");

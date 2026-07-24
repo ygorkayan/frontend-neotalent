@@ -169,6 +169,9 @@ export const orderCars =
         break;
     }
 
+    // because of favoriteCar change the order in localStorage, we need to update it here as well to keep it consistent
+    localStorage.setItem("cars", JSON.stringify(sortedCars));
+
     setOrder(order);
     // it sorting in place, TODO: create another approach to avoid mutating the state directly
     setCars(sortedCars);

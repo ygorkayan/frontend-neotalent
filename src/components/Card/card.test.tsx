@@ -3,20 +3,29 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import Card from "./Card";
 
-vi.mock("./Util", () => ({
-  useCountdown: () => ({
-    remainingDays: 3,
-    remainingHours: 4,
-    auctionHasStarted: false,
-    date: "01 Aug 2026, 12:00 BST",
-  }),
-}));
+vi.mock("./Util", async function mockCardUtils(importOriginal) {
+  const actual = await importOriginal<typeof import("./Util")>();
+
+  return {
+    ...actual,
+    useCountdown: function mockCountdown() {
+      return {
+        remainingDays: 3,
+        remainingHours: 4,
+        auctionHasStarted: false,
+        date: "01 Aug 2026, 12:00 BST",
+      };
+    },
+  };
+});
 
 const defaultProps = {
+  id: 1,
   auctionStartsAt: "2026-08-01T12:00:00",
   startingBid: 12000,
   make: "BMW",
@@ -36,14 +45,18 @@ afterEach(() => {
 
 describe("Card", () => {
   it("renders the vehicle and auction information", () => {
-    render(<Card {...defaultProps} />);
+    render(
+      <MemoryRouter>
+        <Card {...defaultProps} />
+      </MemoryRouter>,
+    );
 
     expect(screen.getByText("BMW 320d")).toBeInTheDocument();
     expect(screen.getByText("2.0L - 2019")).toBeInTheDocument();
     expect(screen.getByText("45000")).toBeInTheDocument();
     expect(screen.getByText("Diesel")).toBeInTheDocument();
     expect(screen.getByText("Starting Bid")).toBeInTheDocument();
-    expect(screen.getByText("12000")).toBeInTheDocument();
+    expect(screen.getByText("£12,000")).toBeInTheDocument();
     expect(screen.getByText("01 Aug 2026, 12:00 BST")).toBeInTheDocument();
     expect(screen.getByText("Auction starts in")).toBeInTheDocument();
     expect(screen.getByText("3")).toBeInTheDocument();
@@ -54,7 +67,11 @@ describe("Card", () => {
     const user = userEvent.setup();
     const onFavoriteClick = vi.fn();
 
-    render(<Card {...defaultProps} onFavoriteClick={onFavoriteClick} />);
+    render(
+      <MemoryRouter>
+        <Card {...defaultProps} onFavoriteClick={onFavoriteClick} />
+      </MemoryRouter>,
+    );
 
     const favoriteButton = screen.getByRole("button", { name: "Add to favorites" });
     expect(favoriteButton).toHaveAttribute("aria-pressed", "false");
@@ -65,7 +82,11 @@ describe("Card", () => {
   });
 
   it("shows the active state when the vehicle is a favorite", () => {
-    render(<Card {...defaultProps} isFavorite />);
+    render(
+      <MemoryRouter>
+        <Card {...defaultProps} isFavorite />
+      </MemoryRouter>,
+    );
 
     const favoriteButton = screen.getByRole("button", { name: "Remove from favorites" });
     expect(favoriteButton).toHaveAttribute("aria-pressed", "true");

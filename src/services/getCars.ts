@@ -5,12 +5,15 @@ export function getCars() {
 
     // it is a kind of cache to avoid go to the server if there are the data
     if (carsLocal) {
+      console.log("Requesting from cache");
       return JSON.parse(carsLocal);
     }
 
+    console.log("Requesting from cache");
     localStorage.setItem("cars", JSON.stringify(cars));
     return cars;
   } catch {
+    console.log("Requesting from cache");
     return cars;
   }
 }

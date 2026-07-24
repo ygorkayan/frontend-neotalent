@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { CalendarIcon, FuelIcon, RoadIcon, TimerIcon, FavoriteIcon } from "./Icons";
-import { useCountdown } from "./Util";
+import { useCountdown, formatPrice } from "./Util";
+import { useNavigate } from "react-router-dom";
 
 interface CardProps {
+  id: number;
   auctionStartsAt: string;
   startingBid: number;
   make: string;
@@ -16,6 +18,7 @@ interface CardProps {
 }
 
 function Card({
+  id,
   auctionStartsAt,
   startingBid,
   make,
@@ -27,10 +30,11 @@ function Card({
   isFavorite,
   onFavoriteClick,
 }: Readonly<CardProps>) {
+  const navigate = useNavigate();
   const { remainingDays, remainingHours, auctionHasStarted, date } = useCountdown(auctionStartsAt);
 
   return (
-    <CardContainer>
+    <CardContainer onClick={() => navigate(`/vehicle/${id}`)}>
       <Gallery>
         <CarImage src="/images/car-placeholder.png" alt="car image" />
 
@@ -39,16 +43,17 @@ function Card({
           aria-pressed={isFavorite}
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
           title={isFavorite ? "Remove from favorites" : "Add to favorites"}
-          onClick={() => onFavoriteClick()}
+          onClick={(e) => {
+            e.stopPropagation();
+            onFavoriteClick();
+          }}
         >
           <FavoriteIcon $filled={isFavorite} />
         </FavoriteButton>
       </Gallery>
 
       <Content>
-        <Price>
-          <Currency>£</Currency> {startingBid}
-        </Price>
+        <Price>{formatPrice(startingBid)}</Price>
         <Subtitle>Starting Bid</Subtitle>
 
         <Name>
@@ -124,7 +129,7 @@ const FavoriteButton = styled.button`
   height: clamp(42px, 5vw, 52px);
   display: grid;
   cursor: pointer;
-  color: #0875c9;
+  color: var(--color-blue);
   position: absolute;
   place-items: center;
   border-radius: 8px;
@@ -140,7 +145,7 @@ const FavoriteButton = styled.button`
 
   &:focus-visible {
     outline-offset: 2px;
-    outline: 3px solid #0875c9;
+    outline: 3px solid var(--color-blue);
   }
 `;
 
@@ -153,11 +158,6 @@ const Price = styled.p`
   font-size: clamp(28px, 3vw, 34px);
   font-weight: 700;
   line-height: 1.1;
-`;
-
-const Currency = styled.span`
-  font-size: clamp(25px, 2.8vw, 32px);
-  font-weight: 400;
 `;
 
 const Name = styled.span`
@@ -208,7 +208,7 @@ const AuctionCountdown = styled.div`
   gap: 13px;
   display: flex;
   margin-top: clamp(22px, 3vw, 28px);
-  color: #0875c9;
+  color: var(--color-blue);
   padding-top: clamp(18px, 2.5vw, 22px);
   align-items: center;
   border-top: 1px solid var(--border-color);
@@ -237,7 +237,7 @@ const TimeValues = styled.span`
   font-size: clamp(16px, 2vw, 18px);
 
   strong {
-    color: #0875c9;
+    color: var(--color-blue);
     font-size: clamp(19px, 2.2vw, 22px);
   }
 `;
